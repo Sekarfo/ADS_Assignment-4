@@ -21,7 +21,7 @@ public class DijkstraSearch<Vertex> extends Search<Vertex> {
         while (!unsettledNodes.isEmpty()) {
             Vertex currentNode = getVertexWithMinimumWeight(unsettledNodes);
 
-            marked.add(currentNode);
+            label.add(currentNode);
             unsettledNodes.remove(currentNode);
 
             for (Vertex neighbor : graph.adjacencyList(currentNode)) {
@@ -29,7 +29,7 @@ public class DijkstraSearch<Vertex> extends Search<Vertex> {
 
                 if (getShortestDistance(neighbor) > newDistance) {
                     distances.put(neighbor, newDistance);
-                    edgeTo.put(neighbor, currentNode); // inverted adding
+                    EdgeTo.put(neighbor, currentNode); // inverted adding
                     unsettledNodes.add(neighbor);
                 }
             }

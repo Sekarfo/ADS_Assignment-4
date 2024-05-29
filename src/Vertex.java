@@ -1,9 +1,32 @@
+import java.util.HashMap;
 import java.util.Map;
 
-public class Vertex<T> {
-    private T data;
-    private Map<Vertex<T>, Double> adjacentVertices;
+public class Vertex<V> {
+    private V data;
+    private Map<Vertex<V>, Double> adjacentVertices;
 
-    // getters&setters constructors
-    // equals
+    public Vertex(V data) {
+        this.data = data;
+        this.adjacentVertices = new HashMap<>();
+    }
+
+    public V getData() {
+        return data;
+    }
+
+
+
+
+    public void addAdjacentVertex(Vertex<V> destination, double weight ){
+        adjacentVertices.put(destination, weight);
+    }
+
+    public Map<Vertex<V>, Double> getAdjacentVertices() {
+        return adjacentVertices;
+    }
+
+
+
+
+
 }

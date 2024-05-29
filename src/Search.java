@@ -1,30 +1,39 @@
 import java.util.*;
 
 public class Search<Vertex> {
-    protected Set<Vertex> marked;
-    protected Map<Vertex, Vertex> edgeTo;
-    protected final Vertex source;
+
+    protected Map<Vertex, Vertex> EdgeTo;
+
+    protected Set<Vertex> label;
+
+    protected Vertex source;
 
     public Search(Vertex source) {
         this.source = source;
-        marked = new HashSet<>();
-        edgeTo = new HashMap<>();
+        label = new HashSet<>();
+        EdgeTo = new HashMap<>();
     }
 
-    public boolean hasPathTo(Vertex v) {
-        return marked.contains(v);
-    }
 
     public Iterable<Vertex> pathTo(Vertex v) {
-        if (!hasPathTo(v)) return null;
 
-        LinkedList<Vertex> ls = new LinkedList<>();
-        for (Vertex i = v; i != source; i = edgeTo.get(i)) {
-            ls.push(i); // inverted adding
+        Iterable<Vertex> result = null;
+        LinkedList<Vertex> LinkList = new LinkedList<>();
+
+        if (HasPath(v) != false) {
+            for (Vertex i = v; i != source; i = EdgeTo.get(i)) {
+                LinkList.push(i);
+            }
+            LinkList.push(source);
+            result = LinkList;
         }
 
-        ls.push(source);
 
-        return ls;
+        return result;
+    }
+
+
+    public boolean HasPath(Vertex v) {
+        return label.contains(v);
     }
 }
