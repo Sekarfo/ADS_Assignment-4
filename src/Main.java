@@ -14,12 +14,6 @@ public class Main {
         MyGraph<String> graph = new MyGraph<>(true);
         fillWithoutWeights(graph);
 
-        System.out.println("DFS:");
-        Search<String> dfs = new DepthFirstSearch<>(graph, "Almaty");
-        outputPath(dfs, "Kyzylorda");
-
-        System.out.println("--------------------------------");
-
         System.out.println("BFS:");
         Search<String> bfs = new BreadthFirstSearch<>(graph, "Almaty");
         outputPath(bfs, "Kyzylorda");
