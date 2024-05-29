@@ -7,29 +7,27 @@ public class DijkstraSearch<Vertex> extends Search<Vertex> {
 
     public DijkstraSearch(WeightedGraph<Vertex> graph, Vertex source) {
         super(source);
-        unsettledNodes = new HashSet<>();
-        distances = new HashMap<>();
         this.graph = graph;
-
+        this.unsettledNodes = new HashSet<>();
+        this.distances = new HashMap<>();
         dijkstra();
     }
 
-    public void dijkstra() {
+    private void dijkstra() {
         distances.put(source, 0D);
         unsettledNodes.add(source);
 
         while (!unsettledNodes.isEmpty()) {
             Vertex currentNode = getVertexWithMinimumWeight(unsettledNodes);
-
             label.add(currentNode);
             unsettledNodes.remove(currentNode);
 
-            for (Vertex neighbor : graph.adjacencyList(currentNode)) {
+            for (Vertex neighbor : graph.getAdjacencyList(currentNode)) {
                 double newDistance = getShortestDistance(currentNode) + getDistance(currentNode, neighbor);
 
                 if (getShortestDistance(neighbor) > newDistance) {
                     distances.put(neighbor, newDistance);
-                    EdgeTo.put(neighbor, currentNode); // inverted adding
+                    EdgeTo.put(neighbor, currentNode);
                     unsettledNodes.add(neighbor);
                 }
             }
@@ -38,32 +36,24 @@ public class DijkstraSearch<Vertex> extends Search<Vertex> {
 
     private double getDistance(Vertex node, Vertex target) {
         for (Edge<Vertex> edge : graph.getEdges(node)) {
-            if (edge.getDest().equals(target))
+            if (edge.getDestination().equals(target)) {
                 return edge.getWeight();
+            }
         }
-
-        throw new RuntimeException("Not found!");
+        throw new RuntimeException("Edge not found!");
     }
 
     private Vertex getVertexWithMinimumWeight(Set<Vertex> vertices) {
         Vertex minimum = null;
         for (Vertex vertex : vertices) {
-            if (minimum == null) {
+            if (minimum == null || getShortestDistance(vertex) < getShortestDistance(minimum)) {
                 minimum = vertex;
-
-                continue;
             }
-
-            if (getShortestDistance(vertex) < getShortestDistance(minimum))
-                minimum = vertex;
         }
-
         return minimum;
     }
 
     private double getShortestDistance(Vertex destination) {
-        Double d = distances.get(destination);
-
-        return (d == null ? Double.MAX_VALUE : d);
+        return distances.getOrDefault(destination, Double.MAX_VALUE);
     }
 }

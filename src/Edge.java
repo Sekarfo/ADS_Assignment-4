@@ -1,54 +1,45 @@
 import java.util.Objects;
 
 public class Edge<Vertex> {
-    private Vertex source;
-    private Vertex dest;
-    private Double weight;
+    private final Vertex source;
+    private final Vertex destination;
+    private  double weight;
 
-    public Edge(Vertex source, Vertex dest, Double weight) {
+    public Edge(Vertex source, Vertex destination, double weight) {
         this.source = source;
-        this.dest = dest;
+        this.destination = destination;
         this.weight = weight;
     }
 
-    public Edge(Vertex source, Vertex dest) {
-        this.source = source;
-        this.dest = dest;
-    }
-
-    public void setSource(Vertex source) {
-        this.source = source;
+    public Edge(Vertex source, Vertex destination) {
+        this.source= source;
+        this.destination= destination;
     }
 
     public Vertex getSource() {
         return source;
     }
 
-    public void setDest(Vertex dest) {
-        this.dest = dest;
+    public Vertex getDestination() {
+        return destination;
     }
 
-    public Vertex getDest() {
-        return dest;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public Double getWeight() {
+    public double getWeight() {
         return weight;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true; // references compared
-
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        Edge<?> edge = (Edge<?>) o;
+        return Double.compare(edge.weight, weight) == 0 &&
+                Objects.equals(source, edge.source) &&
+                Objects.equals(destination, edge.destination);
+    }
 
-        Edge<?> otherEdge = (Edge<?>) o;
-
-        return Objects.equals(this.source, otherEdge.source) &&
-                Objects.equals(this.dest, otherEdge.dest);
+    @Override
+    public int hashCode() {
+        return Objects.hash(source, destination, weight);
     }
 }
